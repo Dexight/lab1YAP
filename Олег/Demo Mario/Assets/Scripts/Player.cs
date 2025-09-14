@@ -17,6 +17,10 @@ public class Player : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+
+    [SerializeField] private Text scoreText;
+    private int score;
+
     private void Awake()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -77,5 +81,11 @@ public class Player : MonoBehaviour
     private void Jump()
     {
         rigidbody2d.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+    }
+
+    public void AddCoin(int count)
+    {
+        score += count;
+        scoreText.text = score.ToString();
     }
 }
