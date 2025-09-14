@@ -14,9 +14,14 @@ public class Player : MonoBehaviour
     private bool isGrounded;
     private float xMax;
     private Rigidbody2D rigidbody2d;
+
+    private SpriteRenderer spriteRenderer;
+    private Animator animator;
     private void Awake()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();   
+        animator = GetComponent<Animator>();
         xMax = Camera.main.orthographicSize * Camera.main.aspect;
     }
     private void Update()
@@ -38,6 +43,24 @@ public class Player : MonoBehaviour
         else velocity.x = inputAxis * speed;
 
         rigidbody2d.velocity = velocity;
+
+        if (inputAxis < 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (inputAxis > 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+
+        if (isGrounded) 
+        {
+            animator.SetInteger("State", inputAxis != 0? 1 : 0);
+        }
+        else
+        {
+            animator.SetInteger("State", 2);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
