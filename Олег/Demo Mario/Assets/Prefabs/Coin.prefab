@@ -144,3 +144,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   count: 10
+  audioClip: {fileID: 8300000, guid: e54be8d28c6903140a325691d4321ecc, type: 3}
+  audioSource: {fileID: 0}
