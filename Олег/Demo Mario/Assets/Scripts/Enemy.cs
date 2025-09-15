@@ -11,9 +11,11 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rigidbody2d;
     private Vector2 direction = Vector2.left;
 
+    private float xMax;
     private void Awake()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
+        xMax = Camera.main.orthographicSize * Camera.main.aspect;
     }
 
     private void Start()
@@ -26,7 +28,8 @@ public class Enemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
-
+        if (transform.position.x < -xMax + 0.5f || transform.position.x > xMax - 0.5f)
+            ChangeDirection(true);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
