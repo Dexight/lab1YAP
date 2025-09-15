@@ -12,4 +12,9 @@ public class StartGame : MonoBehaviour
     private void Update()
     {
     }
+
+    public void StartTheGame()
+    {
+        SceneManager.LoadScene(1);
+    }
 }
