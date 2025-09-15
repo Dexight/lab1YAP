@@ -11,4 +11,13 @@ public class Starpower : MonoBehaviour
     private void Update()
     {
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<Player>().StarPowerActive(3);
+            Destroy(gameObject);
+        }
+    }
 }

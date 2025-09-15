@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Text scoreText;
     private int score;
 
+    [SerializeField] private float speedCoefficient;
+    public bool StarPower { get; private set; }
+
     private void Awake()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -87,5 +90,27 @@ public class Player : MonoBehaviour
     {
         score += count;
         scoreText.text = score.ToString();
+    }
+
+    private IEnumerator StarPowerAnimation(float duration)
+    {
+        StarPower = true;
+        speed *= speedCoefficient;
+        float elapsed = 0f;
+        while (elapsed < duration) 
+        {
+            if (Time.frameCount % 4 == 0) 
+                spriteRenderer.color = Random.ColorHSV(0f, 1f, 1f, 1f, 1f, 1f);
+            yield return null;
+            elapsed += Time.deltaTime;
+        }
+        speed /= speedCoefficient;
+        spriteRenderer.color = Color.white;
+        StarPower = false;
+    }
+
+    public void StarPowerActive(float duration = 5f)
+    {
+        StartCoroutine(StarPowerAnimation(duration));
     }
 }

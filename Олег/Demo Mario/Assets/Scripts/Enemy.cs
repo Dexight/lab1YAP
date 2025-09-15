@@ -12,6 +12,9 @@ public class Enemy : MonoBehaviour
     private Vector2 direction = Vector2.left;
 
     private float xMax;
+
+    private Player player;
+
     private void Awake()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -20,12 +23,14 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         rigidbody2d.velocity = direction * speed;
     }
 
     private void Update()
     {
     }
+
     private void FixedUpdate()
     {
         if (transform.position.x < -xMax + 0.5f || transform.position.x > xMax - 0.5f)
@@ -37,7 +42,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             bool dead = collision.contacts.All(c => c.point.y > transform.position.y);
-            if (dead)
+            if (dead || player.StarPower)
             {
                 Destroy(gameObject);
             }
