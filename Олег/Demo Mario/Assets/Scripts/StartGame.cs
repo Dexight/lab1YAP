@@ -17,4 +17,9 @@ public class StartGame : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+    public void StartTheMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 }

@@ -48,7 +48,9 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                SceneManager.LoadScene(0);
+                GameManager.instance.isFromTube = false;
+                GameManager.instance.score = 0;
+                SceneManager.LoadScene(3);
             }
         }
         else ChangeDirection(!collision.contacts.All(c => c.point.y < transform.position.y));

@@ -8,6 +8,8 @@ using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
+    public static Player instance;
+
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
     private Vector2 velocity;
@@ -19,18 +21,26 @@ public class Player : MonoBehaviour
     private Animator animator;
 
     [SerializeField] private Text scoreText;
-    private int score;
 
     [SerializeField] private float speedCoefficient;
     public bool StarPower { get; private set; }
 
     private void Awake()
     {
+        instance = this;
         rigidbody2d = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();   
         animator = GetComponent<Animator>();
         xMax = Camera.main.orthographicSize * Camera.main.aspect;
     }
+
+    private void Start()
+    {
+        if (scoreText)
+            scoreText.text = GameManager.instance.score.ToString();
+        GameManager.instance.OnSceneLoad();
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -88,8 +98,8 @@ public class Player : MonoBehaviour
 
     public void AddCoin(int count)
     {
-        score += count;
-        scoreText.text = score.ToString();
+        GameManager.instance.score += count;
+        scoreText.text = GameManager.instance.score.ToString();
     }
 
     private IEnumerator StarPowerAnimation(float duration)
